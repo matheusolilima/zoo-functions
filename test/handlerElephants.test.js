@@ -19,4 +19,13 @@ describe('Testes da função HandlerElephants', () => {
   it('Verifica se o argumento "availability" faz a função retornar um array com a relação de dias em que é possível visitar os elefantes', () => {
     expect(handlerElephants('availability')).toEqual(['Friday', 'Saturday', 'Sunday', 'Tuesday']);
   });
+  it('Verifique se com um argumento não presente entre os possiveis, o retorno é null', () => {
+    expect(handlerElephants('umAgumentoRuim')).toBe(null);
+  });
+  it('Verifique se a função sem parametros retorna undefined', () => {
+    expect(handlerElephants()).toBe(undefined);
+  });
+  it('Verifique se com argumento que não seja string retorna uma mensagem', () => {
+    expect(handlerElephants(7)).toMatch('Parâmetro inválido, é necessário uma string');
+  });
 });
