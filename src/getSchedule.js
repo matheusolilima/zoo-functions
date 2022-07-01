@@ -13,10 +13,9 @@ function getSchedule(scheduleTarget) {
   saida.Monday = { officeHour: 'CLOSED', exhibition: 'The zoo will be closed!' };
   const existeDia = horarios.some((dia) => dia[0] === scheduleTarget);
   const existeEspecie = species.filter((specie) => specie.name === scheduleTarget);
-  if (scheduleTarget === 'Monday') return { Monday: saida[scheduleTarget] };
-  if ((!scheduleTarget || existeDia === false) && (existeEspecie.length === 0)) return saida;
   if (existeEspecie.length > 0) return existeEspecie[0].availability;
   if (existeDia === true) {
+    if (scheduleTarget === 'Monday') return { Monday: saida[scheduleTarget] };
     return {
       [scheduleTarget]: {
         officeHour: `Open from ${hours[scheduleTarget].open}am until ${hours[scheduleTarget].close}pm`,
@@ -25,6 +24,7 @@ function getSchedule(scheduleTarget) {
       },
     };
   }
+  return saida;
 }
 // console.log(getSchedule());
 // console.log(getSchedule('Tuesday'));
