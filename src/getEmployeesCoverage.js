@@ -16,43 +16,38 @@ function getCompleteList() {
   return completeList;
 }
 
+function criaSaida(targetEmployee) {
+  const saida = {
+    id: targetEmployee.id,
+    fullName: `${targetEmployee.firstName} ${targetEmployee.lastName}`,
+    species: (targetEmployee.responsibleFor).map((item) =>
+      species.find((specie) => specie.id === item).name),
+    locations: (targetEmployee.responsibleFor).map((item) =>
+      species.find((specie) => specie.id === item).location),
+  };
+  return saida;
+}
+
 function getEmployeesCoverage(obj) {
-  // seu código aqui
   if (!obj) return getCompleteList();
   let targetEmployee = {};
-  const objContainName = Object.keys(obj).includes('name');
-  const objContainId = Object.keys(obj).includes('id');
-  let nameOnList = false;
-  let idOnList = false;
-  function criaSaida(targetEmployee) {
-    const saida = {
-      id: targetEmployee.id,
-      fullName: `${targetEmployee.firstName} ${targetEmployee.lastName}`,
-      species: (targetEmployee.responsibleFor).map((item) => species.find((specie) => specie.id === item).name),
-      locations: (targetEmployee.responsibleFor).map((item) => species.find((specie) => specie.id === item).location),
-    }
-    return saida;
+  let validInput = false;
+  targetEmployee = employees.find((employee) => employee.id === obj.id);
+  if (targetEmployee !== undefined) {
+    return criaSaida(targetEmployee);
   }
-  if (objContainName) {
-    targetEmployee = employees.find((employee) =>
-      ((employee.firstName === obj.name) || (employee.lastName === obj.name)));
-    if (targetEmployee !== undefined){
-      nameOnList = true;
-      return criaSaida(targetEmployee);
-    }
+  targetEmployee = employees.find((employee) =>
+    ((employee.firstName === obj.name) || (employee.lastName === obj.name)));
+  if (targetEmployee !== undefined) {
+    validInput = true;
+    return criaSaida(targetEmployee);
   }
-  // console.log(targetEmployee);
-  if (objContainId) {
-    targetEmployee = employees.find((employee) => employee.id === obj.id);
-    if (targetEmployee !== undefined){
-      idOnList = true;
-      return criaSaida(targetEmployee);
-    }  
-  }
-  if ((nameOnList || idOnList) === false) {
+  if (validInput === false) {
     throw new Error('Informações inválidas');
   }
-
 }
-//getEmployeesCoverage({ name: 'Sharonda' });
+// seu código aqui
+// obj = { name: 'Sharonda' };
+// obj = { id:'4b40a139-d4dc-4f09-822d-ec25e819a5ad' };
+getEmployeesCoverage();
 module.exports = getEmployeesCoverage;
