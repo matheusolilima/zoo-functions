@@ -16,13 +16,8 @@ function getSchedule(scheduleTarget) {
   const existeEspecie = species.filter((specie) => specie.name === scheduleTarget);
   if (existeEspecie.length > 0) return existeEspecie[0].availability;
   if (horarios.some((dia) => dia[0] === scheduleTarget) === true) {
-    if (scheduleTarget === 'Monday') return { Monday: saida.Monday };
     return { [scheduleTarget]: saida[scheduleTarget] };
   }
   return saida;
 }
-// console.log(getSchedule());
-// console.log(getSchedule('Tuesday'));
-// console.log(getSchedule('Monday'));
-// console.log(getSchedule('lions'));
 module.exports = getSchedule;

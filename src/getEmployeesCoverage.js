@@ -16,38 +16,22 @@ function getCompleteList() {
   return completeList;
 }
 
-function criaSaida(targetEmployee) {
-  const saida = {
-    id: targetEmployee.id,
-    fullName: `${targetEmployee.firstName} ${targetEmployee.lastName}`,
-    species: (targetEmployee.responsibleFor).map((item) =>
-      species.find((specie) => specie.id === item).name),
-    locations: (targetEmployee.responsibleFor).map((item) =>
-      species.find((specie) => specie.id === item).location),
-  };
-  return saida;
-}
-
 function getEmployeesCoverage(obj) {
-  if (!obj) return getCompleteList();
+  const listaCompleta = getCompleteList();
+  if (!obj) return listaCompleta;
   let targetEmployee = {};
   let validInput = false;
-  targetEmployee = employees.find((employee) => employee.id === obj.id);
-  if (targetEmployee !== undefined) {
-    return criaSaida(targetEmployee);
-  }
-  targetEmployee = employees.find((employee) =>
-    ((employee.firstName === obj.name) || (employee.lastName === obj.name)));
+  targetEmployee = listaCompleta.find((item) => item.id === obj.id);
+  if (targetEmployee !== undefined) return targetEmployee;
+  targetEmployee = listaCompleta.find((item) => item.fullName.includes(obj.name));
   if (targetEmployee !== undefined) {
     validInput = true;
-    return criaSaida(targetEmployee);
+    return targetEmployee;
   }
-  if (validInput === false) {
-    throw new Error('Informações inválidas');
-  }
+  if (validInput === false) throw new Error('Informações inválidas');
 }
 // seu código aqui
 // obj = { name: 'Sharonda' };
 // obj = { id:'4b40a139-d4dc-4f09-822d-ec25e819a5ad' };
-getEmployeesCoverage();
+// getEmployeesCoverage(obj);
 module.exports = getEmployeesCoverage;
